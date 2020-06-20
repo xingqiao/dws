@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DWS APP</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <img src="/favicon.svg" width="48" />
+    {% block content %}{% endblock %}
+
+    <div class="footer">
+      {% block footer %}DWS @ 2020{% endblock %}
+    </div>
+  </body>
+</html>

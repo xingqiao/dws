@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style type="text/css">
+    span {
+        color: #e13;
+    }
+
+    output {
+        margin-left: 30px;
+        color: #36e;
+    }
+
+    article {
+        display: flex;
+    }
+
+    form {
+        flex: 1;
+        margin: 1em
+    }
+
+    footer {
+        display: flex;
+        justify-items: center;
+        margin-top: 1em;
+    }
+
+    footer > * {
+        flex: 1;
+        border: 1px solid #000;
+        margin: 1em;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+Hello, {{ username | default('poop') | safe }}! This is just some content.
+
+<article id="content" class="pr clearfix">
+    <form action="/hallo" method="post" enctype="application/x-www-form-urlencoded" target="result">
+        <h2>application/x-www-form-urlencoded</h2>
+        <p>First name:
+            <input type="text" name="fname" /></p>
+        <p>Last name:
+            <input type="text" name="lname" /></p>
+        <p>Last name:
+            <input type="file" name="file" /></p>
+        <input type="submit" value="Submit" />
+    </form>
+    <form action="/hallo" method="POST" enctype="multipart/form-data" target="result">
+        <h2>multipart/form-data</h2>
+        <p>First name:
+            <input type="text" name="name" /></p>
+        <p>Last name:
+            <input type="text" name="name" /></p>
+        <p>Last name:
+            <input type="file" name="file" /></p>
+        <input type="submit" value="Submit" />
+    </form>
+    <form action="/hallo" method="POST" enctype="text/plain" target="result">
+        <h2>text/plain</h2>
+        <p>First name:
+            <input type="text" name="fname" /></p>
+        <p>Last name:
+            <input type="text" name="lname" /></p>
+        <p>Last name:
+            <input type="file" name="file" /></p>
+        <input type="submit" value="Submit" />
+    </form>
+</article>
+
+<button id="json">json提交</button>
+
+<footer>
+    <iframe frameborder="1" name="result"></iframe>
+    <pre></pre>
+</footer>
+
+<script type="text/javascript">
+    document.querySelector('#json').addEventListener('click', function() {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = () => {
+            console.log(xhr.response)
+            document.querySelector('pre').innerHTML = xhr.response;
+            // document.querySelector('pre').innerHTML = JSON.stringify(xhr.response)
+        };
+        xhr.open('POST', '/hallo', true);
+        xhr.setRequestHeader('x-requested-with', 'XMLHttpRequest');
+        xhr.send(JSON.stringify({
+            test: {
+                arr: [1, 2, '3']
+            },
+            str: '12345',
+            date: new Date()
+        }));
+    })
+</script>
+{% endblock %}
