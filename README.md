@@ -227,3 +227,35 @@ ctx.requestBody
 ctx.cookies
 // => { key: value, ... }
 ```
+
+## 性能测试
+
+使用 [autocannon](https://github.com/mcollina/autocannon) 进行并发测试
+- Running 5s
+- 100 connections with 2 pipelining factor
+
+### DWS
+
+| Stat    | 2.5% | 50%  | 97.5% | 99%  | Avg     | Stdev   | Max       |
+| ------- | ---- | ---- | ----- | ---- | ------- | ------- | --------- |
+| Latency | 1 ms | 2 ms | 3 ms  | 4 ms | 1.89 ms | 1.34 ms | 111.15 ms |
+
+| Stat      | 1%      | 2.5%    | 50%     | 97.5%   | Avg      | Stdev   | Min     |
+| --------- | ------- | ------- | ------- | ------- | -------- | ------- | ------- |
+| Req/Sec   | 35647   | 35647   | 42719   | 42975   | 41308.81 | 2844.13 | 35647   |
+| Bytes/Sec | 4.46 MB | 4.46 MB | 5.34 MB | 5.37 MB | 5.16 MB  | 355 kB  | 4.46 MB |
+
+207k requests in 5.06s, 25.8 MB read
+
+### Koa
+
+| Stat    | 2.5% | 50%  | 97.5% | 99%  | Avg     | Stdev  | Max      |
+| ------- | ---- | ---- | ----- | ---- | ------- | ------ | -------- |
+| Latency | 0 ms | 1 ms | 5 ms  | 8 ms | 2.17 ms | 2.9 ms | 84.46 ms |
+
+| Stat      | 1%     | 2.5%   | 50%     | 97.5%   | Avg     | Stdev   | Min    |
+| --------- | ------ | ------ | ------- | ------- | ------- | ------- | ------ |
+| Req/Sec   | 29599  | 29599  | 43103   | 43967   | 40606.4 | 5529.94 | 29595  |
+| Bytes/Sec | 4.5 MB | 4.5 MB | 6.55 MB | 6.68 MB | 6.17 MB | 840 kB  | 4.5 MB |
+
+203k requests in 5.05s, 30.9 MB read

@@ -72,18 +72,18 @@ export class DWS {
 
         for await (const req of server) {
             const ctx = new Context(req);
-            if (ctx.method == 'POST') {
-                await ctx.parseBody();
-            }
-            this.exec(ctx)
-                .catch(error => this.onerror(error, ctx))
-                .finally(() => {
-                    const { response, status } = ctx;
-                    if (response.body == undefined && status != Status.OK) {
-                        response.body = ctx.message;
-                    }
-                    req.respond(response);
-                });
+            ctx.parseBody().then(() => {
+                this.exec(ctx)
+                    .catch(error => this.onerror(error, ctx))
+                    .finally(() => {
+                        const { response, status } = ctx;
+                        if (response.body == undefined && status != Status.OK) {
+                            response.body = ctx.message;
+                        }
+                        req.respond(response)
+                            .catch(error => this.onerror(error, ctx));
+                    });
+            });
         }
     }
 
@@ -127,7 +127,7 @@ export class DWS {
      * @param ctx 错误信息
      * @api private
      */
-    onerror(error: any, ctx: Context) {
+    onerror(error: any, ctx?: Context) {
         // 将错误信息打印到控制台
         if (!this.silent) {
             const msg = error.stack || error.toString();
