@@ -7,9 +7,10 @@ import { parseQuerys, Querys, Headers, render } from './utils.ts';
 import { getMimeType } from './mime.ts';
 
 export class Context {
-    acceptsLanguages: string = '';
     /** 获取请求方法 */
     method: string;
+    /** 获取请求协议 */
+    proto: string;
     /** 获取请求协议 */
     protocol: string;
     /** 获取请求域名 */
@@ -46,7 +47,11 @@ export class Context {
         this.request = request;
         this.response = {
             status: Status.NotFound,
-            headers: new Headers(),
+            headers: new Headers({
+                Server: 'DWS',
+                'Content-Type': 'text/html',
+                date: new Date().toUTCString()
+            }),
             body: undefined,
         };
         headers.forEach((value: string, key: string) => {
@@ -54,11 +59,12 @@ export class Context {
         });
         this.cookies = getCookies(request);
         this.method = method.toUpperCase();
+        this.proto = proto;
         this.protocol = 'http';
         this.host = (this.get('X-Forwarded-Host') || (this.request.protoMajor >= 2 && this.get(':authority')) || this.get('Host') || '').split(/\s*,\s*/, 1)[0];
         this.hostname = this.host.split(':', 1)[0];
-        this.origin = `${this.protocol}://${this.host}`;
         this.url = url;
+        this.origin = `${this.protocol}://${this.host}`;
         if (/\?[^]*/.test(url)) {
             const [path, search] = url.split('?');
             this.path = decodeURIComponent(path);
@@ -69,9 +75,6 @@ export class Context {
         } else {
             this.path = decodeURIComponent(url);
         }
-        this.set('Server', 'DWS');
-        this.set('Content-Type', 'text/html');
-        this.set('date', new Date().toUTCString());
     }
 
     /**

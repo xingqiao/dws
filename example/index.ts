@@ -12,7 +12,7 @@ app.use('GET', '/index.html', ctx => {
 
 app.use('GET', '/', async ctx => {
     console.log(ctx)
-    await ctx.render('index.html', { username: 'DWS' });
+    await ctx.render('index.html', { username: 'James' });
 });
 
 app.use('all', /hallo/i, async (ctx, next) => {
