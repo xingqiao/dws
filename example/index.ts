@@ -1,4 +1,4 @@
-import { DWS, useStatic } from '../index.ts';
+import { DWS, useStatic } from 'https://gitee.com/ccts/dws/raw/master/index.ts';
 
 const app = new DWS();
 
@@ -12,7 +12,7 @@ app.use('GET', '/index.html', ctx => {
 
 app.use('GET', '/', async ctx => {
     console.log(ctx)
-    await ctx.render('index.html', { username: 'James' });
+    await ctx.render('index.html', { username: 'DWS' });
 });
 
 app.use('all', /hallo/i, async (ctx, next) => {
