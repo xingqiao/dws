@@ -1,4 +1,4 @@
-![](https://repository-images.githubusercontent.com/273481965/8c6b2400-b30d-11ea-856b-a1c3a839152c)
+![](http://y.gtimg.cn/music/photo_new/T011M000004JSHv224bNls.png)
 
 ![deno](https://img.shields.io/github/v/release/denoland/deno.svg?label=deno)
 ![MulanPSL2](https://img.shields.io/badge/license-MulanPSL2-green)
@@ -233,6 +233,8 @@ ctx.cookies
 使用 [autocannon](https://github.com/mcollina/autocannon) 进行并发测试
 - Running 5s
 - 100 connections with 2 pipelining factor
+
+整体性能和 `Koa` 接近，但得益于 `Deno` 平台的优势，`DWS` 拥有更好的尾部延迟。
 
 ### DWS
 
