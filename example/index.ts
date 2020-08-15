@@ -1,4 +1,4 @@
-import { DWS, useStatic } from 'https://gitee.com/ccts/dws/raw/master/index.ts';
+import { DWS, useStatic } from 'https://deno.land/x/dws/mod.ts';
 
 const app = new DWS();
 

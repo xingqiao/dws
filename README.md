@@ -10,7 +10,7 @@
 
 ```js
 // index.ts
-import { DWS } from 'https://gitee.com/ccts/dws/raw/master/index.ts';
+import { DWS } from 'https://deno.land/x/dws/mod.ts';
 
 const app = new DWS();
 
@@ -119,7 +119,7 @@ app.use('GET', '/', async ctx => {
 ## 处理静态资源
 
 ```js
-import { DWS, useStatic } from 'https://gitee.com/ccts/dws/raw/master/index.ts';
+import { DWS, useStatic } from 'https://deno.land/x/dws/mod.ts';
 
 const app = new DWS();
 
